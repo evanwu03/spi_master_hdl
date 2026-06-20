@@ -1,0 +1,26 @@
+
+[tasks]
+prove
+bmc
+cover
+
+[options]
+prove: mode prove
+bmc: mode bmc
+cover: mode cover
+depth 128
+
+[engines]
+smtbmc
+
+[script]
+read_verilog -sv -formal -D FORMAL spi_pkg.sv sclk_tick_gen.sv spi_master.sv
+chparam -set CLK_HZ 8 spi_master
+chparam -set SCLK_HZ 1 spi_master
+prep -top spi_master
+
+
+[files]
+../rtl/spi_pkg.sv
+../rtl/sclk_tick_gen.sv
+../rtl/spi_master.sv
